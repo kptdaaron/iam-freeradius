@@ -12,7 +12,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
 - Setup access permissions
   ![image](https://user-images.githubusercontent.com/29798188/160750734-af6b6f16-f86d-4019-9847-2ba9f7f81d7d.png)
   > In this section you can opt to use your entire domain or particular group/s within your organization. For the simplicity of this guide we will choose the entire       domain and allow access to all system attributes and group information.
-- Once the client has been created, it will generate a certificate. Download the certificate which will be needed to connect freeradius with google later on.
+- Once the client has been created, it will generate a certificate. Download and unzip the certificate (.crt and .key) which will be needed to connect freeradius with google later on.
 ![image](https://user-images.githubusercontent.com/29798188/160751354-9c228b82-bca7-4ee4-8cbb-62403170f73a.png)
 - Next is to generate a new credentials (username and password) for the application. 
 ![image](https://user-images.githubusercontent.com/29798188/160752098-ef4956e6-e40e-4a08-b167-d03dd3f21019.png)
@@ -21,7 +21,10 @@ This document will serve as a guide on how to setup and configure a basic funtio
 ![image](https://user-images.githubusercontent.com/29798188/160752414-b20e0d66-51ee-4697-b40c-8230c1fede34.png)
 
 #### CONFIGURING THE MACHINE
-1. On an ad and install the necessary packages
-  - ` sudo su `
-  - ` apt update && apt upgrade -y `
-  - ` apt install freeradius freeradius-utils freeradius-ldap -y `
+1. On an existing Ubuntu 20.04 machine, download and install the necessary packages
+ - ` sudo su `
+ - ` apt update && apt upgrade -y `
+ - ` apt install freeradius freeradius-utils freeradius-ldap -y `
+2. Secure copy the downloaded certificate to freeradius directory using SCP using this command
+ - ``` scp {<file1>, <file2>} <host>@<ip>:\etc\freeradius\3.0\certs ```
+ ![image](https://user-images.githubusercontent.com/29798188/160761130-6f8b0a45-36b8-4d7d-a112-44b6aa2b5303.png)
