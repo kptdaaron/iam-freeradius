@@ -20,11 +20,29 @@ This document will serve as a guide on how to setup and configure a basic funtio
 - Now that the application is all set, you would have to turn the service status **ON**
 ![image](https://user-images.githubusercontent.com/29798188/160752414-b20e0d66-51ee-4697-b40c-8230c1fede34.png)
 
-#### CONFIGURING THE MACHINE
-1. On an existing Ubuntu 20.04 machine, download and install the necessary packages
- - ` sudo su `
- - ` apt update && apt upgrade -y `
- - ` apt install freeradius freeradius-utils freeradius-ldap -y `
-2. Secure copy the downloaded certificate to freeradius directory using SCP using this command
- - ``` scp {<file1>, <file2>} <host>@<ip>:\etc\freeradius\3.0\certs ```
- ![image](https://user-images.githubusercontent.com/29798188/160761130-6f8b0a45-36b8-4d7d-a112-44b6aa2b5303.png)
+#### PREPARING THE MACHINE
+  ##### **INSTALLING FREERADIUS**
+  1. On an existing Ubuntu 20.04 machine, download and install the necessary packages
+   - ` sudo su `
+   - ` apt update && apt upgrade -y `
+   - ` apt install freeradius freeradius-utils freeradius-ldap -y `
+  2. Secure copy the downloaded certificate to freeradius directory using SCP using this command
+   - ``` scp {<file1>, <file2>} <host>@<ip>:/etc/freeradius/3.0/certs ```
+   ![image](https://user-images.githubusercontent.com/29798188/160761130-6f8b0a45-36b8-4d7d-a112-44b6aa2b5303.png)
+  ##### **CONFIGURING FREERADIUS**
+  - Here are the freeradius files that needs to be configured
+     - /etc/freeradius/3.0/mods-available/ldap
+     - /etc/freeradius/3.0/mods-available/eap
+     - /etc/freeradius/3.0/sites-available/default
+     - /etc/freeradius/3.0/sites-available/inner-tunnel
+     - /etc/freeradius/3.0/clients.conf
+     - /etc/freeradius/3.0/proxy.conf
+  - Configuring /mods-available/ldap
+    - ` cd /etc/freeradius/3.0/ `
+    - ` vim mods-available/ldap `
+  - In the ldap section, modify these lines: 20, 29, 30, and 33
+    - ` server = 'ldaps://ldap.google.com:636' `
+    - ` identity = '<username>' `
+    - ` password = '<password>' `
+    - ` base_dn = 'dc=<domain>,dc=<top-level-domain> ` e.g. dc=paradox,dc=edu,dc=ph
+    ![image](https://user-images.githubusercontent.com/29798188/160765574-87156d69-3649-401e-89c9-ed36a4a81e24.png)
