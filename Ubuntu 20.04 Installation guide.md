@@ -30,26 +30,26 @@ This document will serve as a guide on how to setup and configure a basic funtio
      apt update && apt upgrade -y
      apt install freeradius freeradius-utils freeradius-ldap -y
      ```
-  2. Secure copy the downloaded certificate to freeradius directory using SCP using this command
+  2. Secure copy the downloaded certificate to freeradius directory using SCP by issuing this command
      ```
-     scp {<file1>, <file2>} <host>@<ip>:/etc/freeradius/3.0/certs
+     scp {<file1>, <file2>} <user>@<ip>:/etc/freeradius/3.0/certs
      ```
      ![image](https://user-images.githubusercontent.com/29798188/160761130-6f8b0a45-36b8-4d7d-a112-44b6aa2b5303.png)
    
      Rename the certificate and key file to ldap-client.crt and ldap-client.key respectively    
      ```
      mv /etc/freeradius/3.0/certs/<certificate>.crt /etc/freeradius/3.0/certs/ldap-client.crt
-     mv /etc/freeradius/3.0/certs/<certificate>.key /etc/freeradius/3.0/certs/ldap-client.crt
+     mv /etc/freeradius/3.0/certs/<certificate>.key /etc/freeradius/3.0/certs/ldap-client.key
      ```
   ##### **CONFIGURING FREERADIUS**
   Here are the freeradius files that needs to be configured
   ```
-     /etc/freeradius/3.0/mods-available/ldap
-     /etc/freeradius/3.0/mods-available/eap
-     /etc/freeradius/3.0/sites-available/default
-     /etc/freeradius/3.0/sites-available/inner-tunnel
-     /etc/freeradius/3.0/clients.conf
-     /etc/freeradius/3.0/proxy.conf
+  /etc/freeradius/3.0/mods-available/ldap
+  /etc/freeradius/3.0/mods-available/eap
+  /etc/freeradius/3.0/sites-available/default
+  /etc/freeradius/3.0/sites-available/inner-tunnel
+  /etc/freeradius/3.0/clients.conf
+  /etc/freeradius/3.0/proxy.conf
   ```
      
   1. Configuring /mods-available/ldap
@@ -62,7 +62,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
      server = 'ldaps://ldap.google.com:636'
      identity = '<username>'
      password = '<password>'
-     base_dn = 'dc=<domain>,dc=<top-level-domain> e.g. dc=paradox,dc=edu,dc=ph
+     base_dn = 'dc=<domain>,dc=<top-level-domain>' e.g. dc=paradox,dc=edu,dc=ph
      ```
      ![image](https://user-images.githubusercontent.com/29798188/160765574-87156d69-3649-401e-89c9-ed36a4a81e24.png)
      
@@ -75,12 +75,12 @@ This document will serve as a guide on how to setup and configure a basic funtio
      ```
      ![image](https://user-images.githubusercontent.com/29798188/160769693-560d2b46-e8ef-435c-8469-5706b132b887.png)
 
-  > **IF YOU HAVE MULTIPLE BASEDN, YOU WOULD HAVE TO CREATE ANOTHER SECTION FOR IT** Just simply copy the whole ldap section and repeat step number 1. 
+  > **IF YOU HAVE MULTIPLE BASEDN, YOU WILL HAVE TO CREATE ANOTHER SECTION FOR IT:** Just simply copy the whole ldap section and repeat step number 1. 
   ``` 
   ldap domain1 { 
        ... 
   }
   ldap domain2 { 
-      ... 
+       ... 
   } 
   ```
