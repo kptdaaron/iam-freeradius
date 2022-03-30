@@ -17,5 +17,11 @@ This document will serve as a guide on how to setup and configure a basic funtio
 - Next is to generate a new credentials (username and password) for the application. 
 ![image](https://user-images.githubusercontent.com/29798188/160752098-ef4956e6-e40e-4a08-b167-d03dd3f21019.png)
 > ##### IMPORTANT: Copy and save the password as it will be presented to you only once, otherwise you will have to create a new credentials again.
-- Now that your application is all set, you would have to turn ON the service status
+- Now that the application is all set, you would have to turn the service status **ON**
 ![image](https://user-images.githubusercontent.com/29798188/160752414-b20e0d66-51ee-4697-b40c-8230c1fede34.png)
+
+#### CONFIGURING THE MACHINE
+1. On an ad and install the necessary packages
+  - ` sudo su `
+  - ` apt update && apt upgrade -y `
+  - ` apt install freeradius freeradius-utils freeradius-ldap -y `
