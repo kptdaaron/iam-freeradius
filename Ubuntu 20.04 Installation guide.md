@@ -57,7 +57,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
      cd /etc/freeradius/3.0/
      vim mods-available/ldap
      ```
-     In the ldap section, modify these lines: 20, 29, 30, and 33 _**(line numbers may change depending on the content of the file)**_
+     In the _ldap_ section, modify these lines: 20, 29, 30, and 33 _**(line numbers may change depending on the content of the file)**_
      ```
      server = 'ldaps://ldap.google.com:636'
      identity = '<username>'
@@ -66,7 +66,11 @@ This document will serve as a guide on how to setup and configure a basic funtio
      ```
      ![image](https://user-images.githubusercontent.com/29798188/160765574-87156d69-3649-401e-89c9-ed36a4a81e24.png)
      
-     In the tls section, modify these lines: 555, 560, 561, and 575 _**(line numbers may change depending on the content of the file)**_
+     In the _post-auth_ section and comment out ` description := "Authenticated at %S" `
+     
+     ![image](https://user-images.githubusercontent.com/29798188/161195903-e031023a-fb1a-405f-bd94-510c03a7abed.png)
+     
+     In the _tls_ section, modify these lines: 555, 560, 561, and 575 _**(line numbers may change depending on the content of the file)**_
      ```
      start_tls = no
      certificate_file = /etc/freeradius/3.0/certs/ldap-client.crt
@@ -75,12 +79,18 @@ This document will serve as a guide on how to setup and configure a basic funtio
      ```
      ![image](https://user-images.githubusercontent.com/29798188/160769693-560d2b46-e8ef-435c-8469-5706b132b887.png)
 
-  > **IF YOU HAVE MULTIPLE BASEDN, YOU WILL HAVE TO CREATE ANOTHER SECTION FOR IT:** Just simply copy the whole ldap section and repeat step number 1. 
-  ``` 
-  ldap domain1 { 
-       ... 
-  }
-  ldap domain2 { 
-       ... 
-  } 
-  ```
+      > **IF YOU HAVE MULTIPLE BASEDN, YOU WILL HAVE TO CREATE ANOTHER SECTION FOR IT:** Just simply copy the whole ldap section and repeat step number 1. 
+      ``` 
+      ldap domain1 { 
+           ... 
+      }
+      ldap domain2 { 
+           ... 
+      } 
+      ```
+     Save the file by issuing this command ` :wq `
+     
+     Now we need to create a symlink of this file to the mods-enabled directory, so that freeradius will be able to use this module.
+     ` ln -s /etc/freeradius/3.0/mods-available/ldap /etc/freeradius/3.0/mods-enabled/ldap `
+     
+     > basically, this command only makes a shortcut file of ` mods-available/ldap ` to ` mods/enabled/ldap `
