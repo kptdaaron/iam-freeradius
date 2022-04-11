@@ -169,10 +169,13 @@ This document will serve as a guide on how to setup and configure a basic funtio
       }
      ```
   5. Verify service using [radtest](https://linux.die.net/man/1/radtest)
+  
      _radtest [-d raddb_directory] [-t pap/chap/mschap] [-x ] [-4 ] [-6 ] user password radius-server nas-port-number secret [ppphint] [nasname]_
+     
      `radtest -t pap test@domain1.com p@ssw0rd! localhost 0 testing123`
+     
      An Access-Accept response will be received if the configuration is all working as expected.
      ![image](https://user-images.githubusercontent.com/29798188/162661938-de922c89-8804-4349-86eb-e4496ee17b25.png)
      
-  ##You now have a functioning RADIUS server with Google Secure LDAP authentication that can be plugged to other services.
+  #### You now have a functioning RADIUS server with Google Secure LDAP authentication that can be plugged to other services.
 
