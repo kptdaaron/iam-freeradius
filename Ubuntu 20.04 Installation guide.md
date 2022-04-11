@@ -96,10 +96,8 @@ This document will serve as a guide on how to setup and configure a basic funtio
      
      > basically, this command only makes a shortcut file of ` mods-available/ldap ` to ` mods/enabled/ldap `
      
-  2. Configuring /sites-available/default
-     ```
-     vim /sites-available/default
-     ```
+  2. Configuring `/sites-available/default` and `/sites-available/inner-tunnel`
+   
      In the authorize section, prepend (-) sign before _ldap_ to disable it then add this switch-case and if statement so that freeradius will read passwords from          these domains
      ```  
        authorize {
@@ -125,7 +123,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
             Auth-Type = domain1
           }
         }
-        if (Realm == '=domain2.com')  {
+        if (Realm == 'domain2.com')  {
           update control {
             Auth-Type = domain2
           }
@@ -148,3 +146,33 @@ This document will serve as a guide on how to setup and configure a basic funtio
         eap
       }
      ```
+  3. Configuring `/etc/freeradius/proxy.conf`
+     This module is where we put all the realms/domains that we want our server to authenticate, for this example: _domain1_ and _domain2_
+     ```
+     realm domain1.com {
+         Auth-Type := domain1
+     }
+     realm domain2.com {
+         Auth-Type := domain2
+     }
+     ```
+  4. Configuring `/etc/freeradius/clients.conf`
+     This is where we put all the clients we want to authenticate in our AAA server (WiFi, VPN, etc.)
+     ```
+     client wifi {
+      ipaddr = 10.0.0.100/24	
+      secret = $tr0ngp@ssw0rd	
+     }
+     client vpn {
+      ipaddr = 10.0.0.200/24
+      secret = 3ncryptEd
+      }
+     ```
+  5. Verify service using [radtest](https://linux.die.net/man/1/radtest)
+     _radtest [-d raddb_directory] [-t pap/chap/mschap] [-x ] [-4 ] [-6 ] user password radius-server nas-port-number secret [ppphint] [nasname]_
+     `radtest -t pap test@domain1.com p@ssw0rd! localhost 0 testing123`
+     An Access-Accept response will be received if the configuration is all working as expected.
+     ![image](https://user-images.githubusercontent.com/29798188/162661938-de922c89-8804-4349-86eb-e4496ee17b25.png)
+     
+  ##You now have a functioning RADIUS server with Google Secure LDAP authentication that can be plugged to other services.
+
