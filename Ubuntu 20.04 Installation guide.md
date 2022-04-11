@@ -91,6 +91,60 @@ This document will serve as a guide on how to setup and configure a basic funtio
      Save the file by issuing this command ` :wq `
      
      Now we need to create a symlink of this file to the mods-enabled directory, so that freeradius will be able to use this module.
+     
      ` ln -s /etc/freeradius/3.0/mods-available/ldap /etc/freeradius/3.0/mods-enabled/ldap `
      
      > basically, this command only makes a shortcut file of ` mods-available/ldap ` to ` mods/enabled/ldap `
+     
+  2. Configuring /sites-available/default
+     ```
+     vim /sites-available/default
+     ```
+     In the authorize section, prepend (-) sign before _ldap_ to disable it then add this switch-case and if statement so that freeradius will read passwords from          these domains
+     ```  
+       authorize {
+        ... 
+        #
+        #  The ldap module reads passwords from the LDAP database.
+        -ldap
+
+        switch "%{realm}" { 
+            case "domain1.com" {
+            domain1
+          }
+            case "domain2.com" {
+            domain2
+          }
+        } 
+        expiration
+        logintime
+        pap
+
+        if (Realm == 'domain1.com')  {
+          update control {
+            Auth-Type = domain1
+          }
+        }
+        if (Realm == '=domain2.com')  {
+          update control {
+            Auth-Type = domain2
+          }
+        }
+      }
+     ```
+     In the authenticate section, comment out `Auth-Type LDAP` block and add Auth-Type for `domain1` and `domain2`
+     ```
+     authenticate {
+        ...
+      #	Auth-Type LDAP {
+      #		ldap
+      #	}
+        Auth-Type domain1 {
+          domain1
+        }
+        Auth-Type domain2 {
+          domain2
+        }
+        eap
+      }
+     ```
