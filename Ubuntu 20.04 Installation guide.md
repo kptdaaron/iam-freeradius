@@ -2,7 +2,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
 
 ### Table of contents
 - [Prerequisite](#prerequisite)
-- [Google Workspace Setup](#google-workspace)
+- [Google Workspace Setup](#google-workspace-setup)
 - [Preparing the server](#preparing-the-server)
 - [Configuring Freeradius](#installing-freeradius)
 
@@ -19,7 +19,7 @@ This document will serve as a guide on how to setup and configure a basic funtio
   Setup access permissions
   ![image](https://user-images.githubusercontent.com/29798188/160750734-af6b6f16-f86d-4019-9847-2ba9f7f81d7d.png)
   > In this section you can opt to use your entire domain or particular group/s within your organization. For the simplicity of this guide we will choose the entire       domain and allow access to all system attributes and group information.
-  Once the client has been created, it will generate a certificate. Download and unzip the certificate (.crt and .key) which will be needed to connect freeradius with   google later on.
+    Once the client has been created, it will generate a certificate. Download and unzip the certificate (.crt and .key) which will be needed to connect freeradius         with   google later on.
   
   ![image](https://user-images.githubusercontent.com/29798188/160751354-9c228b82-bca7-4ee4-8cbb-62403170f73a.png)
   Next is to generate a new credentials (username and password) for the application. 
